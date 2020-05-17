@@ -33,7 +33,11 @@ def startbrowser():
     driver.close()
 
 
+
+
 def test_008_TC_checkboxes1_section_heading(startbrowser):
+    driver.find_element_by_xpath("//a[contains(text(),'Input Forms')]").click()
+    driver.find_element_by_xpath("//a[contains(text(),'Checkbox Demo')]").click()
     heading = driver.find_element_by_xpath("//div[text()='Single Checkbox Demo']").text
     assert heading =="Single Checkbox Demo"
 
