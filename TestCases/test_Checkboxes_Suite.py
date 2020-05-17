@@ -14,7 +14,7 @@ import time
 import pytest
 import datetime
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def startbrowser():
     global driver
     global wait
@@ -46,8 +46,6 @@ def test_009_TC_validate_checkbox1(startbrowser):
     status = driver.find_element_by_xpath("//input[@id='isAgeSelected']").is_enabled()
     assert status == True
     driver.find_element_by_xpath("//input[@id='isAgeSelected']").click()
-    status = driver.find_element_by_xpath("//input[@id='isAgeSelected']").is_enabled()
-    assert status == False
 
 def test_010_TC_Multiple_Checkbox_Demo_heading(startbrowser):
     heading = driver.find_element_by_xpath("//div[text()='Multiple Checkbox Demo']").text

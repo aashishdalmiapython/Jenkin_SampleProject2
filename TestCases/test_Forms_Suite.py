@@ -12,7 +12,7 @@ import time
 import pytest
 import datetime
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def startbrowser():
     global driver
     global wait
