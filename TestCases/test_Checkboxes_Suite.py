@@ -1,5 +1,7 @@
 from selenium import webdriver
 from Libraries import configRead
+from Pages import Bootstrap_Date_picker
+from Pages import jQuery_Date_picker
 from Assersions import Forms_Assersions
 from Pages import Simple_Form_Demo
 from selenium.webdriver.support import expected_conditions as EC
@@ -31,30 +33,23 @@ def startbrowser():
     driver.close()
 
 
-def test_TC_004_title_Simple_Form_One(startbrowser):
-    SimpleForm = Simple_Form_Demo.simpleformClass(driver)
-    SimpleForm.input_form_link_click()
-    SimpleForm.simple_form__demo_link_click()
-    title = SimpleForm.get_form_1_title()
-    Forms_Assersions.assert_title_form_1(title)
+def test_008_TC_checkboxes1_section_heading(startbrowser):
+    heading = driver.find_element_by_xpath("//div[text()='Single Checkbox Demo']").text
+    assert heading =="Single Checkbox Demo"
 
-def test_TC_005_Sigle_input_field_check(startbrowser):
-    driver.find_element_by_xpath("//input[@id='user-message']").send_keys("Aashish")
-    driver.find_element_by_xpath("//button[contains(text(),'Show Message')]").click()
-    entredtext = driver.find_element_by_xpath("//div[@id='user-message']/span").text
-    assert entredtext == "Aashish"
+def test_009_TC_validate_checkbox1(startbrowser):
+    driver.find_element_by_xpath("//input[@id='isAgeSelected']").click()
+    status = driver.find_element_by_xpath("//input[@id='isAgeSelected']").is_enabled()
+    assert status == True
 
+def test_010_TC_Multiple_Checkbox_Demo_heading(startbrowser):
+    heading = driver.find_element_by_xpath("//div[text()='Multiple Checkbox Demo']").text
+    assert heading =="Multiple Checkbox Demo"
 
-def test_TC_006_title_sample_form2(startbrowser):
-    sample = Simple_Form_Demo.simpleformClass(driver)
-    title = sample.get_form2_title()
-    Forms_Assersions.assert_title_form_2(title)
-
-def test_TC_007_Double_input_field_check(startbrowser):
-    sample = Simple_Form_Demo.simpleformClass(driver)
-    sample.enter_form2_field1_value("5")
-    sample.enter_form2_field2_value("10")
-    sample.click__form2_get_result_button()
-    result = sample.check_form2_result()
-    assert result == "15"
-
+def test_011_TC_Multiple_checkbox_select(startbrowser):
+    driver.find_element_by_xpath("//label[text()='Option 1']").click()
+    driver.find_element_by_xpath("//label[text()='Option 2']").click()
+    driver.find_element_by_xpath("//label[text()='Option 3']").click()
+    driver.find_element_by_xpath("//label[text()='Option 4']").click()
+    attvalue = driver.find_element_by_xpath("//input[@id='check1']").get_attribute("value")
+    assert attvalue == "Uncheck All"
