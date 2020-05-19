@@ -12,16 +12,14 @@ import time
 import pytest
 import datetime
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def startbrowser():
     global driver
     global wait
     global mouseaction
     driver = webdriver.Chrome(executable_path=configRead.configRead("path","chrome_exe"))
-    driver.get('chrome://settings/clearBrowserData')
-    driver.find_element_by_xpath('//settings-ui').send_keys(Keys.ENTER)
-    driver.implicitly_wait(30)
     driver.get(configRead.configRead('url','website'))
+    driver.implicitly_wait(30)
     driver.maximize_window()
     wait = WebDriverWait(driver,30)
     mouseaction =ActionChains(driver)
