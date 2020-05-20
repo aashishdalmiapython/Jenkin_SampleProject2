@@ -12,24 +12,11 @@ import time
 import pytest
 import datetime
 
-@pytest.fixture(scope="session")
-def startbrowser():
-    global driver
-    global wait
-    global mouseaction
-    driver = webdriver.Chrome(executable_path=configRead.configRead("path","chrome_exe"))
-    driver.get(configRead.configRead('url','website'))
-    driver.implicitly_wait(30)
-    driver.maximize_window()
-    wait = WebDriverWait(driver,30)
-    mouseaction =ActionChains(driver)
-    if (wait.until(EC.visibility_of_element_located((By.XPATH,"//html/body/div[4]/div/div[1]/div/div[2]/a"))).is_displayed() == True):
-        driver.find_element_by_xpath("//html/body/div[4]/div/div[1]/div/div[2]/a").click()
-    yield
-    driver.close()
-
 
 def test_TC_004_title_Simple_Form_One(startbrowser):
+    driver = startbrowser[0]
+    wait = startbrowser[1]
+    mouseaction = startbrowser[2]
     SimpleForm = Simple_Form_Demo.simpleformClass(driver)
     SimpleForm.input_form_link_click()
     SimpleForm.simple_form__demo_link_click()
@@ -37,6 +24,9 @@ def test_TC_004_title_Simple_Form_One(startbrowser):
     Forms_Assersions.assert_title_form_1(title)
 
 def test_TC_005_Sigle_input_field_check(startbrowser):
+    driver = startbrowser[0]
+    wait = startbrowser[1]
+    mouseaction = startbrowser[2]
     driver.find_element_by_xpath("//input[@id='user-message']").send_keys("Aashish")
     driver.find_element_by_xpath("//button[contains(text(),'Show Message')]").click()
     entredtext = driver.find_element_by_xpath("//div[@id='user-message']/span").text
@@ -44,11 +34,17 @@ def test_TC_005_Sigle_input_field_check(startbrowser):
 
 
 def test_TC_006_title_sample_form2(startbrowser):
+    driver = startbrowser[0]
+    wait = startbrowser[1]
+    mouseaction = startbrowser[2]
     sample = Simple_Form_Demo.simpleformClass(driver)
     title = sample.get_form2_title()
     Forms_Assersions.assert_title_form_2(title)
 
 def test_TC_007_Double_input_field_check(startbrowser):
+    driver = startbrowser[0]
+    wait = startbrowser[1]
+    mouseaction = startbrowser[2]
     sample = Simple_Form_Demo.simpleformClass(driver)
     sample.enter_form2_field1_value("5")
     sample.enter_form2_field2_value("10")
